@@ -65,4 +65,3 @@ close_booking.addEventListener("click", () => {
 document.getElementById('book_test').addEventListener("click", () => {
     document.getElementById('book_time_test').style.display = 'block';
 });
-
