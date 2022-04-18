@@ -1,8 +1,11 @@
-function consult_cnfm_close() {
-    document.getElementById('consult-cnfm').style.display = 'none';
+function booking_cnfm_close() {
+    document.getElementById('booking-cnfm').style.display = 'none';
 }
-function consult_err_close() {
-    document.getElementById('consult-login-err').style.display = 'none';
+function booking_err_close() {
+    document.getElementById('booking-login-err').style.display = 'none';
+}
+function booking_err2_close() {
+    document.getElementById('booking-login-err2').style.display = 'none';
 }
 function predict() {
     document.getElementById('predict_form').style.display = 'block';

@@ -118,7 +118,8 @@
         <p>Order your required medicines as prescibed by any health specialist. We will deliver it to your house as quickly as posible.<br>We believe in qaulity and we'll provide you hygenic and certified medicines only.</p>
     </section>
     <section class="medicines">
-        <div class="med-container">
+        <h1>Medicines</h1>
+        <form action="/book_medicine" method="post">
             <div class="med-box">
                 <img src="images/medicine/dolo.webp" alt="error">
                 <div class="med-info"> 
@@ -339,23 +340,50 @@
                     <input type="number" name="m20" id="m20" min="0" placeholder="0" max="500">
                 </div>
             </div>
-        </div>
-        <div class="ordermed">    
-            <button class="medbtn" onclick=booking_cnfm()>Order medicines now</button>
-        </div>
-        <div class="popup-cnfm" id="consult-cnfm">
-            <div class="cnfm-icon">
-                <i class="material-icons">&#xE876;</i>
+            <div class="ordermed">
+                <button class="medbtn" id="book_med">Order medicine now</button>
             </div>
-            <h3 class="cnfm-head">Awesome!</h3>
-            <div class="cnfm-para">
-                <p>Your order has been placed.</p>
-                <p>Check your mail for detailes.</p>
+        </form>
+        <% if(booking == 'error') { %>
+            <div class="popup-cnfm" id="booking-login-err">
+                <div class="cnfm-icon">
+                    <i class="material-icons booking-med-err">&#xe000;</i>
+                </div>
+                <h3 class="cnfm-head">Oops!</h3>
+                <div class="cnfm-para">
+                    <p>Please log in first to book a lab test.</p>
+                </div>
+                <div class="cnfm-btn">
+                    <button id="booking-err-ok" onclick=booking_err_close()>OK</button>
+                </div>
             </div>
-            <div class="cnfm-btn">
-                <button id="cnfm-ok" onclick=booking_cnfm_close()>OK</button>
-            </div>
-        </div>
+            <% } else if (booking == 'success') { %>
+                <div class="popup-cnfm" id="booking-cnfm">
+                    <div class="cnfm-icon">
+                        <i class="material-icons">&#xE876;</i>
+                    </div>
+                    <h3 class="cnfm-head">Awesome!</h3>
+                    <div class="cnfm-para">
+                        <p>Your booking has been confirmed.</p>
+                        <p>Check your mail for detailes.</p>
+                    </div>
+                    <div class="cnfm-btn">
+                        <button id="booking-cnfm-ok" onclick=booking_cnfm_close()>OK</button>
+                    </div>
+                </div>
+                <% } else if (booking == 'insufficient') { %>
+                    <div class="popup-cnfm" id="booking-login-err2">
+                        <div class="cnfm-icon">
+                            <i class="material-icons booking-med-err">&#xe000;</i>
+                        </div>
+                        <h3 class="cnfm-head">Oops!</h3>
+                        <div class="cnfm-para">
+                            <p>We are currently of stock the medicine you ordered.</p>
+                        </div>
+                        <div class="cnfm-btn">
+                            <button id="booking-err2-ok" onclick=booking_err2_close()>OK</button>
+                        </div>
+                        <% } %>
     </section>
     <script type="text/javascript" src="app.js"></script>
     <script type="text/javascript" src="chat_frontend.js"></script>

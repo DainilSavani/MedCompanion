@@ -8,6 +8,9 @@ var LocalStorage = require('node-localstorage').LocalStorage;
 localStorage = new LocalStorage('./scratch');
 const session = require('express-session');
 const { time } = require('console');
+const { update } = require('list');
+const { Int32, ConnectionCheckOutFailedEvent } = require('mongodb');
+const { type } = require('os');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -27,14 +30,11 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
     res.render(path.join(__dirname, 'homepage'), { 'session': session.loggedin, 'not_registered': 1, 'invalid': 1 });
 });
-app.get('/lab_test', (req, res) => {
-    res.render(path.join(__dirname, 'lab_test'), { 'session': session.loggedin, 'disease': -1 });
-});
-app.get('/medicine', (req, res) => {
-    res.render(path.join(__dirname, 'medicine'), { 'session': session.loggedin });
-});
 app.get('/contact', (req, res) => {
     res.render(path.join(__dirname, 'contact'), { 'session': session.loggedin });
+});
+app.get('/medicine', (req, res) => {
+    res.render(path.join(__dirname, 'medicine'), { 'session': session.loggedin, 'booking': null });
 });
 app.get('/chatbot', (req, res) => {
     res.render(path.join(__dirname, 'chatpage'), { 'session': session.loggedin });
@@ -54,7 +54,7 @@ const usrSchema = new mongoose.Schema({
 const User = mongoose.model('User', usrSchema);
 
 const bookSchema = new mongoose.Schema({
-    Id: String, Type: String, UserId: String, DoctorId: String, Date: Date
+    Id: String, Type: String, UserId: String, DoctorId: String, DoctorName: String, DoctorField: String, TestId: String, TestName: String, TestResult: String, MedicineId: String, MedicineName: String, Date: Date, Quantity: Number
 });
 const Booking = mongoose.model('Booking', bookSchema);
 
@@ -67,6 +67,16 @@ const docSchema = new mongoose.Schema({
     Id: String, Name: String, Phone: Number, Email: String, Qualification: String, Field: String, Experience: String, DOJ: Date
 });
 const Doctor = mongoose.model('Doctor', docSchema);
+
+const testSchema = new mongoose.Schema({
+    Id: String, Name: String
+});
+const Test = mongoose.model('Test', testSchema);
+
+const medSchema = new mongoose.Schema({
+    Id: String, Name: String, Quantity: Number
+});
+const Medicine = mongoose.model('Medicine', medSchema);
 
 
 var flag_u = 1;
@@ -107,25 +117,26 @@ app.post('/login', (req, res) => {
 app.get('/profile', (req, res) => {
     if (session.loggedin) {
         User.findOne({ 'Email': session.email }, (err, user) => {
-            const name = user.Name;
-            const [f, s, l] = name.split(' ')
-            user.f = f;
-            var date = JSON.stringify(user.DOB);
-            date = date.slice(1, 11);
-            res.render(path.join(__dirname, 'profile'), { 'usr': user, 'date': date });
+            Booking.find({ 'UserId': user.Id }, (err, book) => {
+                const name = user.Name;
+                const [f, s, l] = name.split(' ')
+                user.f = f;
+                var consult=[]; var test=[]; var med=[];
+                for( var i=0; i<book.length; i++) {
+                    if (book[i].Type=='Consultation') {
+                        consult.push(book[i]);
+                    } else if (book[i].Type == 'Lab Test') {
+                        test.push(book[i]);
+                    } else {
+                        med.push(book[i]);
+                    }
+                }   
+                res.render(path.join(__dirname, 'profile'), { 'usr': user, 'consult': consult, 'test': test, 'med': med});
+            });
         });
     }
     else {
         res.send('Please login to view this page.');
-    }
-});
-app.get('/consultation', (req, res) => {
-    if (session.loggedin) {
-        User.findOne({'Email': session.email}, (err, user) => {
-            res.render(path.join(__dirname, 'consultation'), { 'session': session.loggedin, 'usr': user, 'booking': null });
-        });
-    } else {
-        res.render(path.join(__dirname, 'consultation'), { 'session': session.loggedin , 'usr': null, 'booking': null});
     }
 });
 
@@ -134,6 +145,111 @@ app.post('/logout', (req, res) => {
     session.email = null;
     res.render(path.join(__dirname, 'homepage'), { 'session': session.loggedin, 'not_registered': 1, 'invalid': 1 });
 });
+
+app.get('/consultation', (req, res) => {
+    if (session.loggedin) {
+        User.findOne({ 'Email': session.email }, (err, user) => {
+            Doctor.find({}, (err, doc) => {
+                res.render(path.join(__dirname, 'consultation'), { 'docs': doc, 'session': session.loggedin, 'usr': user, 'booking': null, 'docId': null });
+            });
+        });
+    } else {
+        Doctor.find({}, (err, doc) => {
+            res.render(path.join(__dirname, 'consultation'), { 'docs': doc, 'session': session.loggedin, 'usr': null, 'booking': null, 'docId': null });
+        });
+    }
+});
+
+var book_consult_docId = '';
+app.post('/book_doctor', (req, res) => {
+    book_consult_docId = req.body.doctorId;
+    if (session.loggedin) {
+        User.findOne({ 'Email': session.email }, (err, user) => {
+            Doctor.find({}, (err, doc) => {
+                res.render(path.join(__dirname, 'consultation'), { 'docs': doc, 'session': session.loggedin, 'usr': user, 'booking': null, 'docId': book_consult_docId });
+            });
+        });
+    } else {
+        Doctor.find({}, (err, doc) => {
+            res.render(path.join(__dirname, 'consultation'), { 'docs': doc, 'session': session.loggedin, 'usr': null, 'booking': null, 'docId': book_consult_docId });
+        });
+    }
+});
+
+var flag_b = 1;
+localStorage.setItem(flag_b);
+app.post('/consult_booking', (req, res) => {
+    const { date, time, usrId, doctorId } = req.body;
+    if (!usrId) {
+        Doctor.find({}, (err, doc) => {
+            res.render(path.join(__dirname, 'consultation'), { 'docs': doc, 'session': session.loggedin, 'usr': null, 'booking': 'error', 'docId': null });
+        });
+    }
+    else {
+        localStorage.getItem(flag_b);
+        b_id = "B" + 0 + flag_b;
+        flag_b = flag_b + 1;
+        localStorage.setItem(flag_b);
+        const book = new Booking();
+        book.Id = b_id; book.Type = "Consultation"; book.UserId = usrId; book.DoctorId = doctorId; book.Date = date;
+        Doctor.findOne({'Id': doctorId}, (err, doc1) => {
+            book.DoctorName = doc1.Name;
+            book.DoctorField = doc1.Field;
+            book.save().then(() => {
+                User.findOne({ 'Id': usrId }, (err, user) => {
+                    Doctor.find({}, (err, doc) => {
+                        res.render(path.join(__dirname, 'consultation'), { 'docs': doc, 'session': session.loggedin, 'usr': user, 'booking': 'success', 'docId': null });
+                    });
+                });
+            })
+            .catch(err => console.log(err));
+        });
+        }
+});
+
+app.get('/lab_test', (req, res) => {
+    if (session.loggedin) {
+        User.findOne({ 'Email': session.email }, (err, user) => {
+            res.render(path.join(__dirname, 'lab_test'), { 'session': session.loggedin, 'usr': user, 'testIds': null, 'booking': null, 'disease': -1 });
+        });
+    } else {
+        res.render(path.join(__dirname, 'lab_test'), { 'session': session.loggedin, 'usr': null, 'testIds': null, 'booking': null, 'disease': -1 });
+    }
+});
+
+app.post('/book_test', (req, res) => {
+    var testIds = Object.keys(req.body).map((key) => [req.body[key]] );
+    if (session.loggedin) {
+        User.findOne({ 'Email': session.email }, (err, user) => {
+            res.render(path.join(__dirname, 'lab_test'), { 'session': session.loggedin, 'usr': user, 'testIds': testIds, 'booking': null, 'disease': -1 });
+        });
+    } else {
+        res.render(path.join(__dirname, 'lab_test'), { 'session': session.loggedin, 'usr': null, 'testIds': testIds, 'booking': null, 'disease': -1 });
+    }
+});
+app.post('/test_booking', (req, res) => {
+    const { date, time, usrId, testIds } = req.body;
+    if (!usrId) {
+        res.render(path.join(__dirname, 'lab_test'), { 'session': session.loggedin, 'usr': null, 'testIds': null, 'booking': 'error', 'disease': -1 });
+    }
+    else {
+        var arr = testIds.split(',');
+        localStorage.getItem(flag_b);
+        b_id = "B" + 0 + flag_b;
+        flag_b = flag_b + 1;
+        localStorage.setItem(flag_b);
+        for (var i=0; i<arr.length; i++) {
+            Test.findOne({'Id': arr[i]}, (err, test) => {
+                const book = new Booking();
+                book.Id = b_id; book.Type = "Lab Test"; book.UserId = usrId; book.TestId = test.Id; book.TestName = test.Name; book.Date = date;
+                book.save();
+            });
+        }
+        User.findOne({ 'Id': usrId }, (err, user) => {
+            res.render(path.join(__dirname, 'lab_test'), { 'session': session.loggedin, 'usr': user, 'testIds': null, 'booking': 'success', 'disease': -1 });
+        });
+    }
+})
 
 app.post('/disease_prediction', (req, res) => {
     const { sex, age, restbps, chol, thalach, oldpeak, cp, fbs, recg, exang, slope, ca, thal } = req.body;
@@ -145,41 +261,65 @@ app.post('/disease_prediction', (req, res) => {
     const spawn = require("child_process").spawn;
     const pythonProcess = spawn('python3', ["/home/denny3010/Desktop/Software_lab/MedCompanion/predict/predict.py", final_list]);
     pythonProcess.stdout.on('data', (data) => {
-        var output = String.fromCharCode.apply(null, data).slice(0,1)
-        console.log(output);
-        res.render(path.join(__dirname, 'lab_test'), { 'session': session.loggedin, 'disease': Number(output)});
+        var output = String.fromCharCode.apply(null, data).slice(0, 1)
+        User.findOne({ 'Email': session.email }, (err, usr) => {
+            res.render(path.join(__dirname, 'lab_test'), { 'session': session.loggedin, 'usr': usr, 'testIds': null, 'booking': null, 'disease': Number(output) });
+        });
     });
 });
 
-var flag_b = 1;
-localStorage.setItem(flag_b);
-app.post('/consult_booking', (req, res) => {
-    const { date, time, usrId, docId } = req.body;
-    console.log(req.body);
-    if (!usrId) {
-        res.render(path.join(__dirname, 'consultation'), { 'session': session.loggedin , 'usr': null, 'booking': 'error'});
-    }
-    else {
-        localStorage.getItem(flag_b);
-        b_id = "B" + 0 + flag_b;
-        flag_b = flag_b + 1;
-        localStorage.setItem(flag_b);
-        const book = new Booking();
-        book.Id = b_id; book.Type = "Consultation"; book.UserId = usrId; book.DoctorId = docId; book.Date = moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
-        book.save().then( () => {
-            res.render(path.join(__dirname, 'consultation'), { 'session': session.loggedin , 'usr': null, 'booking': 'success'});
-        })
-        .catch(err => console.log(err));
-    }
+app.post('/book_medicine', (req, res) => {
+    if (!session.loggedin) {
+        res.render(path.join(__dirname, 'medicine'), { 'session': session.loggedin, 'booking': 'error' });
+    } else {
+        
+        var tempMedIds = Object.values(req.body)
+        var flagQts = true;
+        const medQts = []; const medIds = [];
+        for (var i=0; i<tempMedIds.length; i++) {
+            if (tempMedIds[i]) {
+                medIds.push(i);
+                medQts.push(Number(tempMedIds[i]));
+            } else {
+                continue;
+            }
+        }
+        const mIds=[];
+        for (var i=0; i<medIds.length; i++) {
+            mIds.push('M000' + (medIds[i] + 1));
+        }
+        for(var i=0; i<mIds.length; i++) {
+            const quantity =  medQts[i];
+            Medicine.findOne({'Id': mIds[i]}, (err, med) => {
+                localStorage.getItem(flag_b);
+                b_id = "B" + 0 + flag_b;
+                flag_b = flag_b + 1;
+                localStorage.setItem(flag_b);
+                const book = new Booking();
+                if (med.Quantity-quantity>=0) {
+                    med.Quantity = med.Quantity - quantity;
+                    med.save();
+                    User.findOne({'Email': session.email}, (err, usr) => {
+                        book.Id = b_id; book.Type = 'Medicine'; book.UserId = usr.Id; book.MedicineId = med.Id;
+                        book.MedicineName = med.Name; book.Quantity = quantity; let today = new Date().toISOString().slice(0, 10); book.Date = today;
+                        book.save();
+                        res.render(path.join(__dirname, 'medicine'), { 'session': session.loggedin, 'booking': 'success' });
+                    }); 
+                } else{
+                    flagQts = false;                
+                    res.render(path.join(__dirname, 'medicine'), { 'session': session.loggedin, 'booking': 'insufficient'});
+                }
+            });
+        }
+    }   
 });
 
 app.post('/contact_us', (req, res) => {
     const { name, Email, Number, comment } = req.body;
-    console.log(comment);
     const query = new Query();
     query.Name = name; query.Email = Email; query.Contact = Number; query.Comment = comment;
     query.save();
-    res.sendFile(path.join(__dirname, 'contact.html'), { 'session': session.loggedin });
+    res.render(path.join(__dirname, 'contact'), { 'session': session.loggedin });
 });
 
 app.listen(port);

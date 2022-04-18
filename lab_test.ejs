@@ -116,29 +116,29 @@
         <button class="chat-icon" onclick="location.href='/chatbot';"></button>
     </div>
     <% if (disease==0) { %>
-        <div class="popup-cnfm" id="predict-result0">
+        <div class="popup-cnfm" id="predict-result1">
             <div class="cnfm-icon">
-                <i class="material-icons">&#xE876;</i>
+                <i class="material-icons" id="predict0">&#xe000;</i>
             </div>
-            <h3 class="cnfm-head">Awesome!</h3>
+            <h3 class="cnfm-head">Oops!</h3>
             <div class="cnfm-para">
-                <p>You are not having any heart related issues.</p>
+                <p>You may have some heart problem. Please consult to our cardiologist.</p>
             </div>
             <div class="cnfm-btn">
-                <button id="predict-ok0" class="predict-ok" onclick=cnfm_predict_close0()>OK</button>
+                <button id="predict-ok0" class="predict-ok" onclick=cnfm_predict_close1()>OK</button>
             </div>
         </div>
         <% } else if (disease==1) { %>
-            <div class="popup-cnfm" id="predict-result1">
+            <div class="popup-cnfm" id="predict-result0">
                 <div class="cnfm-icon">
-                    <i class="material-icons" id="predict1">&#xe000;</i>
+                    <i class="material-icons">&#xE876;</i>
                 </div>
-                <h3 class="cnfm-head">Oops!</h3>
+                <h3 class="cnfm-head">Awesome!</h3>
                 <div class="cnfm-para">
-                    <p>You may have some heart problem. Please consult to our cardiologist.</p>
+                    <p>You are not having any heart related issues.</p>
                 </div>
                 <div class="cnfm-btn">
-                    <button id="predict-ok1" class="predict-ok" onclick=cnfm_predict_close1()>OK</button>
+                    <button id="predict-ok1" class="predict-ok" onclick=cnfm_predict_close0()>OK</button>
                 </div>
             </div>
             <% } %>
@@ -182,153 +182,190 @@
     </section>
     <section class="test-section">
         <h1>Lab tests</h1>
-        <div class="tests">
+        <form action="/book_test" method="post">
             <div class="test-container">
                 <img src="images/labtest/cbc.jpg" alt="error">
                 <div class="name">
                     <h3>Complete Blood Count Test(CBC)</h3>
                 </div>
-                <input type="radio" name="t1" id="r1">
+                <input type="radio" name="t1" id="r1" value="T0001">
             </div>
             <div class="test-container">
                 <img src="images/labtest/rtpcr.jpg" alt="error">
                 <div class="name">
                     <h3>RT-PCR Test</h3>
                 </div>
-                <input type="radio" name="t2" id="r2">
+                <input type="radio" name="t2" id="r2" value="T0002">
             </div>
             <div class="test-container">
                 <img src="images/labtest/thyroid.webp" alt="error">
                 <div class="name">
                     <h3>Thyroid profile Test</h3>
                 </div>
-                <input type="radio" name="t3" id="r3">
+                <input type="radio" name="t3" id="r3" value="T0003">
             </div>
             <div class="test-container">
                 <img src="images/labtest/kidney.jpg" alt="error">
                 <div class="name">
                     <h3>Kidney Function Test</h3>
                 </div>
-                <input type="radio" name="t4" id="r4">
+                <input type="radio" name="t4" id="r4" value="T0004">
             </div>
             <div class="test-container">
                 <img src="images/labtest/iron.jpg" alt="error">
                 <div class="name">
                     <h3>Iron Deficiency Profile</h3>
                 </div>
-                <input type="radio" name="t5" id="r5">
+                <input type="radio" name="t5" id="r5" value="T0005">
             </div>
             <div class="test-container">
                 <img src="images/labtest/lipid.jpg" alt="error">
                 <div class="name">
                     <h3>Lipid Profile</h3>
                 </div>
-                <input type="radio" name="t6" id="r6">
+                <input type="radio" name="t6" id="r6" value="T0006">
             </div>
             <div class="test-container">
                 <img src="images/labtest/hepatitis.jpg" alt="error">
                 <div class="name">
                     <h3>Hepatitis Bs(Surface) Antigen</h3>
                 </div>
-                <input type="radio" name="t7" id="r7">
+                <input type="radio" name="t7" id="r7" value="T0007">
             </div>
             <div class="test-container">
                 <img src="images/labtest/liver.jpg" alt="error">
                 <div class="name">
                     <h3>Liver Function Test</h3>
                 </div>
-                <input type="radio" name="t8" id="r8">
+                <input type="radio" name="t8" id="r8" value="T0008">
             </div>
             <div class="test-container">
                 <img src="images/labtest/glycosilated.jpg" alt="error">
                 <div class="name">
                     <h3>Glycosylated Hemoglobin</h3>
                 </div>
-                <input type="radio" name="t9" id="r9">
+                <input type="radio" name="t9" id="r9" value="T0009">
             </div>
             <div class="test-container">
                 <img src="images/labtest/blood-glucose.jpg" alt="error">
                 <div class="name">
                     <h3>Blood Glucose Test</h3>
                 </div>
-                <input type="radio" name="t10" id="r10">
+                <input type="radio" name="t10" id="r10" value="T00010">
             </div>
             <div class="test-container">
                 <img src="images/labtest/urine-routin.jpg" alt="error">
                 <div class="name">
                     <h3>Urine Routine & Microscopy</h3>
                 </div>
-                <input type="radio" name="t11" id="r11">
+                <input type="radio" name="t11" id="r11" value="T00011">
             </div>
             <div class="test-container">
                 <img src="images/labtest/blood-group.jpg" alt="error">
                 <div class="name">
                     <h3>Blood Grouping</h3>
                 </div>
-                <input type="radio" name="t12" id="r12">
+                <input type="radio" name="t12" id="r12"  value="T00012">
             </div>
             <div class="test-container">
                 <img src="images/labtest/rapid-plasma.jpg" alt="error">
                 <div class="name">
                     <h3>Rapid Plasma Reagin</h3>
                 </div>
-                <input type="radio" name="t13" id="r13">
+                <input type="radio" name="t13" id="r13"  value="T00013">
             </div>
             <div class="test-container">
                 <img src="images/labtest/hiv.jpg" alt="error">
                 <div class="name">
                     <h3>HIV 1 And 2 Antibody</h3>
                 </div>
-                <input type="radio" name="t14" id="r14">
+                <input type="radio" name="t14" id="r14" value="T00014">
             </div>
             <div class="test-container">
                 <img src="images/labtest/rheumatoid.jpg" alt="error">
                 <div class="name">
                     <h3>Rheumatoid Factor - Quantitative</h3>
                 </div>
-                <input type="radio" name="t15" id="r15">
+                <input type="radio" name="t15" id="r15" value="T00015">
             </div>
             <div class="test-container">
                 <img src="images/labtest/calsium.jpg" alt="error">
                 <div class="name">
                     <h3>Calcium Test</h3>
                 </div>
-                <input type="radio" name="t16" id="r16">
+                <input type="radio" name="t16" id="r16"  value="T00016">
             </div>
             <div class="test-container">
                 <img src="images/labtest/crp.jpg" alt="error">
                 <div class="name">
                     <h3>C- Reactive Protein Quantitative</h3>
                 </div>
-                <input type="radio" name="t17" id="r17">
+                <input type="radio" name="t17" id="r17" value="T00017">
             </div>
             <div class="test-container">
                 <img src="images/labtest/esr.jpg" alt="error">
                 <div class="name">
                     <h3>Erythrocyte Sedimentation Rate</h3>
                 </div>
-                <input type="radio" name="t18" id="r18">
+                <input type="radio" name="t18" id="r18"  value="T00018">
             </div>
-        </div>
-        <div class="booktest">
-            <button class="testbtn" id="book_test">Book test now</button>
-        </div>
-        <div class="popup-cnfm" id="book_time_test">
-            <div class="book_time_head">
-                <h3>Lab Test Time</h3>
+            <div class="booktest">
+                <button class="testbtn" id="book_test">Book test now</button>
             </div>
-            <div class="book_time_form_box">
-                <p>Please inform us your preferred date and time for lab test.</p>
-                <form action="/consult_booking" method="post" class="book_time_form">
-                    <label for="date">Date</label>
-                    <input type="date" name="date" id="date" required>
-                    <label for="time">Time</label>
-                    <input type="time" name="time" id="time" min="10:00" max="20:00" required>
-                    <button type="submit" class="btn" id="booking_btn" onclick=booking_cnfm()>Submit</button>
-                    <button type="button" class="btn cancel" id="close_booking">Close</button>
-                </form>
+        </form>
+        <% if (usr) { %>
+            <% var usrId = usr.Id %>
+            <% } else { %>
+                <% var usrId = null %>
+                <% } %>
+        <% if (testIds) { %>
+            <div class="popup-cnfm book_time" id="book_time">
+                <div class="book_time_head">
+                    <h3>Appointment Time</h3>
+                </div>
+                <div class="book_time_form_box">
+                    <p>Please inform us your preferred date and time for lab test.</p>
+                    <form action="/test_booking" method="post" class="book_time_form">
+                        <label for="date">Date</label>
+                        <input type="date" name="date" id="date" required>
+                        <label for="time">Time</label>
+                        <input type="time" name="time" id="time" min="10:00" max="21:00" required>
+                        <input type="hidden" name="usrId" value="<%= usrId %>">
+                        <input type="hidden" name="testIds" value="<%= testIds %>">
+                        <button type="submit" class="btn" id="booking_btn">Submit</button>
+                        <button type="button" class="btn cancel" id="close_booking">Close</button>
+                    </form>
+                </div>
             </div>
-        </div>
+            <% } %>
+        <% if(booking == 'error') { %>
+            <div class="popup-cnfm" id="booking-login-err">
+                <div class="cnfm-icon">
+                    <i class="material-icons booking-test-err">&#xe000;</i>
+                </div>
+                <h3 class="cnfm-head">Oops!</h3>
+                <div class="cnfm-para">
+                    <p>Please log in first to book a lab test.</p>
+                </div>
+                <div class="cnfm-btn">
+                    <button id="booking-err-ok" onclick=booking_err_close()>OK</button>
+                </div>
+            </div>
+            <% } else if (booking == 'success') { %>
+                <div class="popup-cnfm" id="booking-cnfm">
+                    <div class="cnfm-icon">
+                        <i class="material-icons">&#xE876;</i>
+                    </div>
+                    <h3 class="cnfm-head">Awesome!</h3>
+                    <div class="cnfm-para">
+                        <p>Your booking has been confirmed.</p>
+                        <p>Check your mail for detailes.</p>
+                    </div>
+                    <div class="cnfm-btn">
+                        <button id="booking-cnfm-ok" onclick=booking_cnfm_close()>OK</button>
+                    </div>
+                </div>
+                <% } %>
     </section>
     <section class="prediction">
         <h1>How Disease Prediction Works?</h1>

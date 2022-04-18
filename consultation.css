@@ -340,13 +340,17 @@ html{
     margin-right: 40px;
     margin-left: auto;
     margin-top: 60px;
+    padding: 0px 150px;
+
 }
-.doctor-container button{
+.doctor-container > form {
+    margin-left: auto;
+    margin-right: 40px;
+}
+.doctor-container > form > button{
     float: right;
     font-size: 1rem;
     height: 50px;
-    margin-left: auto;
-    margin-right: 40px;
     margin-top: 60px;
     width: 300px;
     border-radius: 20px;
@@ -354,7 +358,7 @@ html{
     border: 2px soild black;
     background-color: rgb(247, 115, 115);
 }
-.doctor-container button:hover{
+.doctor-container > form > button:hover{
     background-color: rgb(247, 71, 71);
     cursor: pointer;
     color: white;
@@ -362,8 +366,8 @@ html{
 
 /* for confirmation */
 
-#book_time{
-    display: none;
+.book_time{
+    display: block;
     padding: 5px 10px;
 }
 .book_time_head{
@@ -435,9 +439,9 @@ html{
     cursor: pointer;
     background-color: rgb(95, 156, 2);
 }
-.consult-err{
+.booking-err{
     background-color: rgb(236, 80, 80);
 }
-#consult-err-ok{
+#booking-err-ok{
     background-color: rgb(236, 80, 80);
 }

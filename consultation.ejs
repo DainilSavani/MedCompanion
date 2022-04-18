@@ -149,170 +149,204 @@
             </div>
         </div>
     </section>
-    <% var docId = null %>
     <section class="doctor-section">
         <h1>Our Doctors</h1>
         <div class="doctors">
             <div class="doctor-container">
                 <div class="department">
                     <img src="images/doctors/cardiology.jpg" alt="error" class="doc-type">
-                    <h2>Cardiologist</h2>
+                    <h2><%= docs[0].Field%></h2>
                 </div>
                 <div class="about">
-                    <h3>Dr. Mark Simons</h3>
-                    <p>MBBS; MD; DM(Cardiology)<br>Exp: 10yrs</p>
+                    <h3><%= docs[0].Name%></h3>
+                    <p><%= docs[0].Qualification%><br>Exp: <%= docs[0].Experience%></p>
                 </div>
-                <button class="book-consult" id="doc1" onclick="'<%docId%>' = 'D0001';">Book appointment now</button>
+                <form action="/book_doctor" method="post">
+                    <input type="hidden" name="doctorId" value="D0001">
+                    <button class="book-consult" id="book-consult1">Book appointment now</button>
+                </form>
             </div>
             <div class="doctor-container">
                 <div class="department">
                     <img src="images/doctors/dermatology.jpg" alt="error" class="doc-type">
-                    <h2>Skin specialist</h2>
+                    <h2><%= docs[1].Field%></h2>
                 </div>
                 <div class="about">
-                    <h3>Dr. Vishnu Mehta</h3>
-                    <p>MBBS; MD(Dermatology & Venereology)<br>Exp: 15yrs</p>
+                    <h3><%= docs[1].Name%></h3>
+                    <p><%= docs[1].Qualification%><br>Exp: <%= docs[1].Experience%></p>
                 </div>
-                <button class="book-consult" id="doc2">Book appointment now</button>
+                <form action="/book_doctor" method="post">
+                    <input type="hidden" name="doctorId" value="D0002">
+                    <button class="book-consult" id="book-consult2">Book appointment now</button>
+                </form>
             </div>
             <div class="doctor-container">
                 <div class="department">
                     <img src="images/doctors/paediatrics.jpg" alt="error" class="doc-type">
-                    <h2>Paediatrics</h2>
+                    <h2><%= docs[2].Field%></h2>
                 </div>
                 <div class="about">
-                    <h3>Dr. Mira Das</h3>
-                    <p>MBBS; DNB(Paediatrics); I.G.I.C.H<br>Exp: 6yrs</p>
+                    <h3><%= docs[2].Name%></h3>
+                    <p><%= docs[2].Qualification%><br>Exp: <%= docs[2].Experience%></p>
                 </div>
-                <button class="book-consult" id="doc3">Book appointment now</button>
+                <form action="/book_doctor" method="post">
+                    <input type="hidden" name="doctorId" value="D0003">
+                    <button class="book-consult" id="book-consult3">Book appointment now</button>
+                </form>
             </div>
             <div class="doctor-container">
                 <div class="department">
                     <img src="images/doctors/pulmonology.jpg" alt="" class="doc-type">
-                    <h2>Pulmonologist</h2>
+                    <h2><%= docs[3].Field%></h2>
                 </div>
                 <div class="about">
-                    <h3>Dr. Kranti Kumar</h3>
-                    <p>MBBS; DNB; FCCP(from USA)<br>Exp: 12yrs</p>
+                    <h3><%= docs[3].Name%></h3>
+                    <p><%= docs[3].Qualification%><br>Exp: <%= docs[3].Experience%></p>
                 </div>
-                <button class="book-consult" id="doc4">Book appointment now</button>
+                <form action="/book_doctor" method="post">
+                    <input type="hidden" name="doctorId" value="D0004">
+                    <button class="book-consult" id="book-consult4">Book appointment now</button>
+                </form>
             </div>
             <div class="doctor-container">
                 <div class="department">
                     <img src="images/doctors/gynac.webp" alt="" class="doc-type">
-                    <h2>Gynaecologist</h2>
+                    <h2><%= docs[4].Field%></h2>
                 </div>
                 <div class="about">
-                    <h3>Dr. Sneha Agarwal</h3>
-                    <p>MBBS & MS(ObsGyn); MRCOG<br>Exp: 9yrs</p>
+                    <h3><%= docs[4].Name%></h3>
+                    <p><%= docs[4].Qualification%><br>Exp: <%= docs[4].Experience%></p>
                 </div>
-                <button class="book-consult" id="doc5">Book appointment now</button>
+                <form action="/book_doctor" method="post">
+                    <input type="hidden" name="doctorId" value="D0005">
+                    <button class="book-consult" id="book-consult5">Book appointment now</button>
+                </form>
             </div>
             <div class="doctor-container">
                 <div class="department">
                     <img src="images/doctors/gastro.jpg" alt="" class="doc-type">
-                    <h2>Gastroenterologist</h2>
+                    <h2><%= docs[5].Field%></h2>
                 </div>
                 <div class="about">
-                    <h3>Dr. Satish Chowdary</h3>
-                    <p>MBBS; MD; DM(Gastro-SGPGI)<br>Exp: 8yrs</p>
+                    <h3><%= docs[5].Name%></h3>
+                    <p><%= docs[5].Qualification%><br>Exp: <%= docs[5].Experience%></p>
                 </div>
-                <button class="book-consult" id="doc6">Book appointment now</button>
+                <form action="/book_doctor" method="post">
+                    <input type="hidden" name="doctorId" value="D0006">
+                    <button class="book-consult" id="book-consult6">Book appointment now</button>
+                </form>
             </div>
             <div class="doctor-container">
                 <div class="department">
                     <img src="images/doctors/neuro.jpg" alt="" class="doc-type">
-                    <h2>Neurologist</h2>
+                    <h2><%= docs[6].Field%></h2>
                 </div>
                 <div class="about">
-                    <h3>Dr. Rishi Prabhakar</h3>
-                    <p>MBBS; MD(Medicine); DM(Neurology);<br> Fellowship in stroke(NUH, Singapore)<br>Exp: 12yrs</p>
+                    <h3><%= docs[6].Name%></h3>
+                    <p><%= docs[6].Qualification%><br>Exp: <%= docs[6].Experience%></p>
                 </div>
-                <button class="book-consult" id="doc7">Book appointment now</button>
+                <form action="/book_doctor" method="post">
+                    <input type="hidden" name="doctorId" value="D0007">
+                    <button class="book-consult" id="book-consult7">Book appointment now</button>
+                </form>
             </div>
             <div class="doctor-container">
                 <div class="department">
                     <img src="images/doctors/diabetology.jpg" alt="" class="doc-type">
-                    <h2>Diabetologist</h2>
+                    <h2><%= docs[7].Field%></h2>
                 </div>
                 <div class="about">
-                    <h3>Dr. Sania Khan</h3>
-                    <p>MBBS; MD<br>Exp: 5yrs</p>
+                    <h3><%= docs[7].Name%></h3>
+                    <p><%= docs[7].Qualification%><br>Exp: <%= docs[7].Experience%></p>
                 </div>
-                <button class="book-consult" id="doc8">Book appointment now</button>
+                <form action="/book_doctor" method="post">
+                    <input type="hidden" name="doctorId" value="D0008">
+                    <button class="book-consult" id="book-consult8">Book appointment now</button>
+                </form>
             </div>
             <div class="doctor-container">
                 <div class="department">
                     <img src="images/doctors/urology.jpg" alt="" class="doc-type">
-                    <h2>Urologist</h2>
+                    <h2><%= docs[8].Field%></h2>
                 </div>
                 <div class="about">
-                    <h3>Dr. Anand Arumugam</h3>
-                    <p>MBBS; MS(General Surgery); MCh(Urology)<br>Exp: 21yrs</p>
+                    <h3><%= docs[8].Name%></h3>
+                    <p><%= docs[8].Qualification%><br>Exp: <%= docs[8].Experience%></p>
                 </div>
-                <button class="book-consult" id="doc9">Book appointment now</button>
+                <form action="/book_doctor" method="post">
+                    <input type="hidden" name="doctorId" value="D0009">
+                    <button class="book-consult" id="book-consult9">Book appointment now</button>
+                </form>
             </div>
             <div class="doctor-container">
                 <div class="department">
                     <img src="images/doctors/endocrinology.jpg" alt="" class="doc-type">
-                    <h2>Endocrinologist</h2>
+                    <h2><%= docs[9].Field%></h2>
                 </div>
                 <div class="about">
-                    <h3>Dr. Diwakar C S</h3>
-                    <p>MBBS; MD(Internal Medicine); DM(Endocrinology)<br>Exp: 16yrs</p>
+                    <h3><%= docs[9].Name%></h3>
+                    <p><%= docs[9].Qualification%><br>Exp: <%= docs[9].Experience%></p>
                 </div>
-                <button class="book-consult" id="doc10">Book appointment now</button>
+                <form action="/book_doctor" method="post">
+                    <input type="hidden" name="doctorId" value="D00010">
+                    <button class="book-consult" id="book-consult10">Book appointment now</button>
+                </form>
             </div>
             <div class="doctor-container physician">
                 <div class="department">
                     <img src="images/doctors/physician.jpg" alt="" class="doc-type">
-                    <h2>Physician</h2>
+                    <h2><%= docs[10].Field%></h2>
                 </div>
                 <div class="about">
-                    <h3>Dr. Arjun Nair</h3>
-                    <p>MBBS; MD(General Medicine)<br>Exp: 13yrs</p>
+                    <h3><%= docs[10].Name%></h3>
+                    <p><%= docs[10].Qualification%><br>Exp: <%= docs[10].Experience%></p>
                 </div>
-                <button class="book-consult" id="doc11">Book appointment now</button>
-            </div>
-        </div>
-        <% if (usr) { %>
-            <% var usrId = usr.ID %>
-            <% } else { %>
-                var usrId = null %>
-                <% } %>
-        <div class="popup-cnfm" id="book_time">
-            <div class="book_time_head">
-                <h3>Appointment Time</h3>
-            </div>
-            <div class="book_time_form_box">
-                <p>Please inform us your preferred date and time for consultation.</p>
-                <form action="/consult_booking" method="post" class="book_time_form">
-                    <label for="date">Date</label>
-                    <input type="date" name="date" id="date" required>
-                    <label for="time">Time</label>
-                    <input type="time" name="time" id="time" min="10:00" max="21:00" required>
-                    <input type="hidden" name="usrId" value=1>
-                    <input type="hidden" name="docId" value=2>
-                    <button type="submit" class="btn" id="booking_btn">Submit</button>
-                    <button type="button" class="btn cancel" id="close_booking">Close</button>
+                <form action="/book_doctor" method="post">
+                    <input type="hidden" name="doctorId" value="D00011">
+                    <button class="book-consult" id="book-consult11">Book appointment now</button>
                 </form>
             </div>
         </div>
+        <% if (usr) { %>
+            <% var usrId = usr.Id %>
+            <% } else { %>
+                <% var usrId = null %>
+                <% } %>
+        <% if (docId) { %>
+            <div class="popup-cnfm book_time" id="book_time">
+                <div class="book_time_head">
+                    <h3>Appointment Time</h3>
+                </div>
+                <div class="book_time_form_box">
+                    <p>Please inform us your preferred date and time for consultation.</p>
+                    <form action="/consult_booking" method="post" class="book_time_form">
+                        <label for="date">Date</label>
+                        <input type="date" name="date" id="date" required>
+                        <label for="time">Time</label>
+                        <input type="time" name="time" id="time" min="10:00" max="21:00" required>
+                        <input type="hidden" name="usrId" value="<%= usrId %>">
+                        <input type="hidden" name="doctorId" value="<%= docId %>">
+                        <button type="submit" class="btn" id="booking_btn">Submit</button>
+                        <button type="button" class="btn cancel" id="close_booking">Close</button>
+                    </form>
+                </div>
+            </div>
+            <% } %>
         <% if(booking == 'error') { %>
-            <div class="popup-cnfm" id="consult-login-err">
+            <div class="popup-cnfm" id="booking-login-err">
                 <div class="cnfm-icon">
-                    <i class="material-icons consult-err">&#xe000;</i>
+                    <i class="material-icons booking-err">&#xe000;</i>
                 </div>
                 <h3 class="cnfm-head">Oops!</h3>
                 <div class="cnfm-para">
                     <p>Please log in first to book an appointment.</p>
                 </div>
                 <div class="cnfm-btn">
-                    <button id="consult-err-ok" onclick=consult_err_close()>OK</button>
+                    <button id="booking-err-ok" onclick=booking_err_close()>OK</button>
                 </div>
             </div>
             <% } else if (booking == 'success') { %>
-                <div class="popup-cnfm" id="consult-cnfm">
+                <div class="popup-cnfm" id="booking-cnfm">
                     <div class="cnfm-icon">
                         <i class="material-icons">&#xE876;</i>
                     </div>
@@ -322,19 +356,11 @@
                         <p>Check your mail for detailes.</p>
                     </div>
                     <div class="cnfm-btn">
-                        <button id="cnfm-ok" onclick=consult_cnfm_close()>OK</button>
+                        <button id="booking-cnfm-ok" onclick=booking_cnfm_close()>OK</button>
                     </div>
                 </div>
                 <% } %>
     </section>
-    <script>
-        var booking_cnfm = document.getElementsByClassName('book-consult');
-        for (var i = 0; i < booking_cnfm.length; i++) {
-            booking_cnfm[i].addEventListener("click", () => {
-                document.getElementById('book_time').style.display = 'block';
-            });
-        }
-    </script>
     <script type="text/javascript" src="app.js"></script>
     <script type="text/javascript" src="chat_frontend.js"></script>
     <script type="text/javascript" src="book_frontend.js"></script>

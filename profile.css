@@ -238,15 +238,15 @@ button:hover{
     /* border: 2px red solid; */
     display: flex;
     justify-content: center;
-    padding: 10px 20px 5px 20px;
+    padding: 10px;
     margin: 10px;
 }
 .box .box-details{
     /* border: 2px red solid; */
-    margin: 10px 20px 5px 20px;
+    margin: 10px 11px;
     border-radius: 8px;
     display: inline-block;
-    padding: 2.5%;
+    padding: 25px 20px;
     background: rgb(82, 80, 80);
     font-size: normal;
     color: white;

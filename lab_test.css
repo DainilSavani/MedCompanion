@@ -305,15 +305,15 @@ html{
     padding-right: 20px;
 }
 
-/* for doctors */
+/* for tests */
 
-.tests{
+.test-section > form{
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.test-container {
+.test-section > form  .test-container {
     width: 30%;
     display: flex;
     border: 2px solid black;
@@ -322,15 +322,15 @@ html{
     border-radius: 10px;
     margin: 7px;
 }
-.test-container > img{
+.test-section > form  .test-container > img{
     height: 120px;
     width: 170px;
     margin: 15px 5px;
 }
-.test-container .name{
+.test-section > form > .test-container .name{
     margin: 57px 5px;
 }
-.test-container > input{
+.test-section > form > .test-container > input{
     margin-left: auto;
     margin-right: 10px;
     margin-top: 61px;
@@ -357,7 +357,8 @@ html{
 
 /* for confirmation */
 
-#book_time_test{
+#book_time{
+    display: block;
     padding: 5px 10px;
 }
 .book_time_head{
@@ -382,9 +383,7 @@ html{
 
 /* for booking acknowledgement */
 
-
 .popup-cnfm{
-    display: none;
     z-index: 9;
     border-radius: 10px;
     width: 400px;
@@ -430,14 +429,11 @@ html{
     cursor: pointer;
     background-color: rgb(95, 156, 2);
 }
-#predict1{
+.booking-test-err{
     background-color: rgb(236, 80, 80);
 }
-#predict-ok1{
+#booking-err-ok{
     background-color: rgb(236, 80, 80);
-}
-#predict-result0, #predict-result1{
-    display: block;
 }
 
 /* for prediction */
@@ -484,7 +480,6 @@ html{
 /* predict result */
 
 .popup-cnfm{
-    display: none;
     z-index: 9;
     border-radius: 10px;
     width: 400px;
@@ -530,9 +525,9 @@ html{
     cursor: pointer;
     background-color: rgb(95, 156, 2);
 }
-.predict+{
+#predict0{
     background-color: rgb(236, 80, 80);
 }
-#predict-ok+{
+#predict-ok0{
     background-color: rgb(236, 80, 80);
 }

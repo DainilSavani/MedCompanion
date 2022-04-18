@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Montagu+Slab:wght@267;300&family=Roboto:wght@300;400&display=swap"
         rel="stylesheet">
@@ -82,7 +81,7 @@
                                     DOB
                                 </div>
                                 <div class="col-md-9 text-secondary dob">
-                                    <%= date %>
+                                    <%= usr.DOB %>
                                 </div>
                             </div>
                             <div class="row">
@@ -124,30 +123,14 @@
                             <th>Department</th>
                             <th>Date</th>
                         </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
+                        <% for (var i=0; i<consult.length; i++) { %>
+                            <tr>
+                                <td><%= consult[i].Id %></td>
+                                <td><%= consult[i].DoctorName %></td>
+                                <td><%= consult[i].DoctorField %></td>
+                                <td><%= consult[i].Date %></td>
+                            </tr>
+                            <% } %>
                     </table>
                 </div>
                 <div class="box-details">
@@ -155,34 +138,18 @@
                         <caption>Test History</caption>
                         <tr>
                             <th>BookingID</th>
-                            <th>Test Name</th>
+                            <th>Lab-Test Name</th>
                             <th>Date</th>
                             <th>Results</th>
                         </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
+                        <% for (var i=0; i<test.length; i++) { %>
+                            <tr>
+                                <td><%= test[i].Id %></td>
+                                <td><%= test[i].TestName %></td>
+                                <td><%= test[i].Date %></td>
+                                <td></td>
+                            </tr>
+                            <% } %>
                     </table>
                 </div>
 
@@ -192,33 +159,17 @@
                         <tr>
                             <th>BookingID</th>
                             <th>Medicine Name</th>
-                            <th>Date</th>
                             <th>Quantity</th>
+                            <th>Date</th>
                         </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
-                        <tr>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                            <td>Hello world!</td>
-                        </tr>
+                        <% for (var i=0; i<med.length; i++) { %>
+                            <tr>
+                                <td><%= med[i].Id %></td>
+                                <td><%= med[i].MedicineName %></td>
+                                <td><%= med[i].Quantity %></td>
+                                <td><%= med[i].Date %></td>
+                            </tr>
+                            <% } %>
                     </table>
                 </div>
             </div>

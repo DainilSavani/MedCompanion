@@ -286,13 +286,19 @@ html{
 
 /* for medicines */
 
-.med-container{
-    margin-top: 80px;
+.medicines > h1{
+    margin-top: 25px;
+    font-size: 2rem;
+    padding: 20px;
+    text-align: center;
+    color: rgb(119, 117, 117);
+}
+.medicines > form{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.med-box {
+.medicines > form .med-box {
     display: flex;
     border: 2px solid black;
     width: 45%;
@@ -300,12 +306,12 @@ html{
     margin: 10px;
     border-radius: 5px;
 }
-.med-box > img {
+.medicines > form .med-box > img {
     margin: 10px 35px;
     height: 200px;
     width: 300px;
 }
-.med-info{
+.medicines > form .med-info{
     margin-top: 80px;
     text-align: center;
 }
@@ -336,7 +342,6 @@ html{
 /* for confirmation */
 
 .popup-cnfm{
-    display: none;
     z-index: 9;
     border-radius: 10px;
     width: 400px;
@@ -381,4 +386,10 @@ html{
 .cnfm-btn > button:hover{
     cursor: pointer;
     background-color: rgb(95, 156, 2);
+}
+.booking-med-err{
+    background-color: rgb(236, 80, 80);
+}
+#booking-err2-ok{
+    background-color: rgb(236, 80, 80);
 }
