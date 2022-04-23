@@ -39,6 +39,8 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 
     $ npm start
     
+### Project URL link : https://med-comp.herokuapp.com
+    
     
 ### SRS document + ER diagram + DFD + Use Case diagram link : https://drive.google.com/drive/folders/1y7yqPdL7S5N13r7-HTusNkfccDdk6XdT?usp=sharing
 
